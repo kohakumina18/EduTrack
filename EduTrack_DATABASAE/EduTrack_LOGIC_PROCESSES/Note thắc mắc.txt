@@ -1,0 +1,21 @@
+-- Ngọc Trang
+-- Tạo procedure Feedback:
+- Trong bảng CREATE TABLE PHANHOI:
+	+ Các thuộc tính nào là khóa chính, khóa ngoại ? 
+	+ Thuộc tính content (nội dung) sẽ dài bao nhiêu kí tự ? 
+	  Có giới hạn độ dài không ? (Nếu có thì khi hiện giao diện nhập nên 
+	  để một dòng lưu ý cho người nhập biết không ? nếu nhập lố thì nên 
+	  có 1 trigger kiểm tra điều kiện này không ?
+	+ Thuộc tính Status (Trạng thái) sẽ gồm những status nào ? 
+	  Ứng với tình huống nào ?
+	+ Nếu là khóa ngoại thì liên kết đến các bảng nào ?
+- Các thông tin khác: 
+	+ Giáo viên gửi phản hồi về vấn đề gì ? 
+	+ Phản hồi được gửi tới những actor nào ? Có cần actor nào duyệt không ?
+	+ Chỉ có 2 trường hợp thêm và sửa phản hồi, vậy:
+		- ai là người được đăng phản hồi ?
+		- ai là người được sửa phản hồi ? Và sửa những gì ?
+		- ai là người xem được các phản hồi đó ?
+
+- Trong bảng CREATE TAIKHOAN:
+	+ Thuộc tính Status, Password hiện màu xanh, hình như bị trùng keyword hệ thống ?

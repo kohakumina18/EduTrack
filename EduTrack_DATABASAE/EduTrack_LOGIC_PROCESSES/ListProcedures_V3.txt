@@ -1,0 +1,476 @@
+---- LIST TABLES
+-- 1. UserRole
+-- 2. GIAOVIEN
+-- 3. LOP
+-- 4. HOCSINH
+-- 5. NHANVIENHOCVU
+-- 6. SYSADMIN
+-- 7. BANGDIEMDANH
+-- 8. BANGDIEM
+-- 9. TAIKHOAN
+
+---- LIST PROCEDURES (chưa lọc, 37 procedures)
+-- 1. Thêm Lớp mới
+-- 2. Thêm Học sinh mới
+-- 3. Thêm Giáo viên mới
+-- 4. Thêm Nhân viên học vụ mới
+-- 5. Thêm Admin hệ thống mới
+-- 6. Thêm Tài khoản mới
+-- 19. Thêm Điểm cho Học sinh
+-- 22. Thêm Điểm danh
+
+-- 7. Cập nhật thông tin Lớp
+-- 8. Cập nhật thông tin Học sinh
+-- 9. Cập nhật thông tin Giáo viên
+-- 10. Cập nhật thông tin Nhân viên học vụ
+-- 11. Cập nhật thông tin Admin hệ thống
+-- 12. Cập nhật thông tin Tài khoản
+-- 20. Cập nhật Điểm cho Học sinh
+-- 23. Cập nhật Điểm danh
+
+-- 13. Xóa Lớp
+-- 14. Xóa Học sinh
+-- 15. Xóa Giáo viên
+-- 16. Xóa Nhân viên học vụ
+-- 17. Xóa Admin hệ thống
+-- 18. Xóa Tài khoản
+-- 21. Xóa Điểm của Học sinh
+-- 24. Xóa Điểm danh
+
+-- 25. Xem Danh sách Lớp
+-- 26. Xem Thông tin Học sinh trong Lớp
+-- 27. Xem Thông tin Giáo viên của Lớp
+-- 28. Xem Điểm danh của Học sinh trong Lớp
+-- 29. Xem Điểm của Học sinh trong Lớp
+-- 30. Xem Thông tin Tài khoản của Người dùng
+
+-- 31. Thêm Phản hồi mới từ Học viên
+-- 33. Xem Danh sách Phản hồi của Học viên
+-- 34. Xem Danh sách Phản hồi chờ xử lý của Học viên
+-- 35. Xem danh sách tất cả phản hồi
+-- 37. Xem Danh sách Phản hồi đã xử lý bởi Sysadmin
+-- 39. Xem Phản hồi theo Ngày và Trạng thái cụ thể
+-- 40. Xử lý Phản hồi bởi Sysadmin
+
+---- LIST PROCEDURES (đã lọc, 29 procedures)
+-- 1. Thêm Lớp mới
+-- 2. Thêm Học sinh mới
+-- 3. Thêm Giáo viên mới
+-- 6. Thêm Tài khoản mới
+-- 19. Thêm Điểm cho Học sinh
+-- 22. Thêm Điểm danh
+
+-- 7. Cập nhật thông tin Lớp
+-- 8. Cập nhật thông tin Học sinh
+-- 9. Cập nhật thông tin Giáo viên
+-- 12. Cập nhật thông tin Tài khoản
+-- 20. Cập nhật Điểm cho Học sinh
+-- 23. Cập nhật Điểm danh
+
+-- 13. Xóa Lớp
+-- 14. Xóa Học sinh
+-- 15. Xóa Giáo viên
+-- 18. Xóa Tài khoản
+
+-- 25. Xem Danh sách Lớp
+-- 26. Xem Thông tin Học sinh trong Lớp
+-- 27. Xem Thông tin Giáo viên của Lớp
+-- 28. Xem Điểm danh của Học sinh trong Lớp
+-- 29. Xem Điểm của Học sinh trong Lớp
+-- 30. Xem Thông tin Tài khoản của Người dùng
+
+-- 31. Thêm Phản hồi mới từ Học viên
+-- 33. Xem Danh sách Phản hồi của Học viên
+-- 34. Xem Danh sách Phản hồi chờ xử lý của Học viên
+-- 35. Xem danh sách tất cả phản hồi
+-- 37. Xem Danh sách Phản hồi đã xử lý bởi Sysadmin
+-- 39. Xem Phản hồi theo Ngày và Trạng thái cụ thể
+-- 40. Xử lý Phản hồi bởi Sysadmin
+
+
+---- DETAILS
+-- 1. Thêm Lớp mới
+--DROP PROC AddClass;
+GO
+CREATE PROCEDURE AddClass
+    @ClassName VARCHAR(255),
+    @ClassSchedule VARCHAR(255),
+    @RoomNumber VARCHAR(50),
+    @AssignedTeacherID VARCHAR(10)
+AS
+BEGIN
+    INSERT INTO LOP (ClassName, ClassSchedule, RoomNumber, AssignedTeacherID)
+    VALUES (@ClassName, @ClassSchedule, @RoomNumber, @AssignedTeacherID);
+END;
+
+-- 2. Thêm Học sinh mới
+--DROP PROC AddStudent;
+GO
+CREATE PROCEDURE AddStudent
+    @FirstName VARCHAR(50),
+    @LastName VARCHAR(50),
+    @Email VARCHAR(100),
+    @Phone VARCHAR(20),
+    @DateOfBirth DATE,
+    @Gender VARCHAR(10),
+    @RoleID INT
+AS
+BEGIN
+    INSERT INTO HOCSINH (FirstName, LastName, Email, Phone, DateOfBirth, Gender, RoleID)
+    VALUES (@FirstName, @LastName, @Email, @Phone, @DateOfBirth, @Gender, @RoleID);
+END;
+
+-- 3. Thêm Giáo viên mới
+-- DROP PROC AddTeacher;
+GO
+CREATE PROCEDURE AddTeacher
+    @FirstName VARCHAR(50),
+    @LastName VARCHAR(50),
+    @Email VARCHAR(100),
+    @Phone VARCHAR(20),
+    @DateOfBirth DATE,
+    @Gender VARCHAR(10),
+    @RoleID INT
+AS
+BEGIN
+    INSERT INTO GIAOVIEN (FirstName, LastName, Email, Phone, DateOfBirth, Gender, RoleID)
+    VALUES (@FirstName, @LastName, @Email, @Phone, @DateOfBirth, @Gender, @RoleID);
+END;
+
+-- 6. Thêm Tài khoản mới
+-- DROP PROC AddAccount;
+GO
+CREATE PROCEDURE AddAccount
+    @Username VARCHAR(50),
+    @Pass VARCHAR(255),
+    @RoleID INT,
+    @AccountState VARCHAR(10)
+AS
+BEGIN
+    INSERT INTO TAIKHOAN (Username, Pass, RoleID, AccountState)
+    VALUES (@Username, @Pass, @RoleID, @AccountState);
+END;
+
+-- 7. Cập nhật thông tin Lớp
+-- DROP PROC UpdateClass;
+GO
+CREATE PROCEDURE UpdateClass
+    @ClassID VARCHAR(10),
+    @ClassName VARCHAR(255),
+    @ClassSchedule VARCHAR(255),
+    @RoomNumber VARCHAR(50),
+    @AssignedTeacherID VARCHAR(10)
+AS
+BEGIN
+    UPDATE LOP
+    SET ClassName = @ClassName, ClassSchedule = @ClassSchedule, RoomNumber = @RoomNumber, AssignedTeacherID = @AssignedTeacherID
+    WHERE ClassID = @ClassID;
+END;
+
+-- 8. Cập nhật thông tin Học sinh
+-- DROP PROC UpdateStudent;
+GO
+CREATE PROCEDURE UpdateStudent
+    @StudentID VARCHAR(10),
+    @FirstName VARCHAR(50),
+    @LastName VARCHAR(50),
+    @Email VARCHAR(100),
+    @Phone VARCHAR(20),
+    @DateOfBirth DATE,
+    @Gender VARCHAR(10),
+    @RoleID INT
+AS
+BEGIN
+    UPDATE HOCSINH
+    SET FirstName = @FirstName, LastName = @LastName, Email = @Email, Phone = @Phone, DateOfBirth = @DateOfBirth, Gender = @Gender, RoleID = @RoleID
+    WHERE UserID = @StudentID;
+END;
+
+-- 9. Cập nhật thông tin Giáo viên
+-- DROP PROC UpdateTeacher;
+GO
+CREATE PROCEDURE UpdateTeacher
+    @TeacherID VARCHAR(10),
+    @FirstName VARCHAR(50),
+    @LastName VARCHAR(50),
+    @Email VARCHAR(100),
+    @Phone VARCHAR(20),
+    @DateOfBirth DATE,
+    @Gender VARCHAR(10),
+    @RoleID INT
+AS
+BEGIN
+    UPDATE GIAOVIEN
+    SET FirstName = @FirstName, LastName = @LastName, Email = @Email, Phone = @Phone, DateOfBirth = @DateOfBirth, Gender = @Gender, RoleID = @RoleID
+    WHERE UserID = @TeacherID;
+END;
+
+-- 12. Cập nhật thông tin Tài khoản
+-- DROP PROC UpdateAccount;
+ GO
+ CREATE PROCEDURE UpdateAccount
+    @UserID VARCHAR(10),
+    @Username VARCHAR(50),
+    @Pass VARCHAR(255),
+    @RoleID INT,
+    @AccountState VARCHAR(10)
+AS
+BEGIN
+    UPDATE TAIKHOAN
+    SET Username = @Username, Pass = @Pass, RoleID = @RoleID, AccountState = @AccountState
+    WHERE UserID = @UserID;
+END;
+
+-- 13. Xóa Lớp
+-- DROP PROC DeleteClass;
+GO
+CREATE PROCEDURE DeleteClass
+    @ClassID VARCHAR(10)
+AS
+BEGIN
+    DELETE FROM LOP WHERE ClassID = @ClassID;
+END;
+
+-- 14. Xóa Học sinh
+-- DROP PROC DeleteStudent;
+GO
+CREATE PROCEDURE DeleteStudent
+    @StudentID VARCHAR(10)
+AS
+BEGIN
+    DELETE FROM HOCSINH WHERE UserID = @StudentID;
+END;
+
+-- 15. Xóa Giáo viên
+-- DROP PROC DeleteTeacher;
+GO
+CREATE PROCEDURE DeleteTeacher
+    @TeacherID VARCHAR(10)
+AS
+BEGIN
+    DELETE FROM GIAOVIEN WHERE UserID = @TeacherID;
+END;
+
+-- 18. Xóa Tài khoản
+-- DROP PROC DeleteAccount;
+GO
+CREATE PROCEDURE DeleteAccount
+    @UserID VARCHAR(10)
+AS
+BEGIN
+    DELETE FROM TAIKHOAN WHERE UserID = @UserID;
+END;
+
+-- 19. Thêm Điểm cho Học sinh
+-- DROP PROC AddGrade;
+GO
+CREATE PROCEDURE AddGrade
+    @ClassID VARCHAR(10),
+    @StudentID VARCHAR(10),
+    @Grade FLOAT,
+    @Comments TEXT
+AS
+BEGIN
+    INSERT INTO BANGDIEM (ClassID, StudentID, Grade, Comments)
+    VALUES (@ClassID, @StudentID, @Grade, @Comments);
+END;
+
+-- 20. Cập nhật Điểm cho Học sinh
+-- DROP PROC UpdateGrade;
+GO
+CREATE PROCEDURE UpdateGrade
+    @GradeID INT,
+    @Grade FLOAT,
+    @Comments TEXT
+AS
+BEGIN
+    UPDATE BANGDIEM
+    SET Grade = @Grade, Comments = @Comments
+    WHERE GradeID = @GradeID;
+END;
+
+-- 22. Thêm Điểm danh
+-- DROP PROC AddAttendance;
+GO
+CREATE PROCEDURE AddAttendance
+    @ClassID VARCHAR(10),
+    @StudentID VARCHAR(10),
+    @Date DATE,
+    @PresenceStatus VARCHAR(20)
+AS
+BEGIN
+    INSERT INTO BANDIEMDANH (ClassID, StudentID, Date, PresenceStatus)
+    VALUES (@ClassID, @StudentID, @Date, @PresenceStatus);
+END;
+
+-- 23. Cập nhật Điểm danh
+-- DROP PROC UpdateAttendance;
+GO
+CREATE PROCEDURE UpdateAttendance
+    @AttendanceID VARCHAR(10),
+    @PresenceStatus VARCHAR(20)
+AS
+BEGIN
+    UPDATE BANDIEMDANH
+    SET PresenceStatus = @PresenceStatus
+    WHERE AttendanceID = @AttendanceID;
+END;
+
+-- 25. Xem Danh sách Lớp
+-- DROP PROC GetClassList;
+GO
+CREATE PROCEDURE GetClassList
+AS
+BEGIN
+    SELECT * FROM LOP;
+END;
+
+-- 26. Xem Thông tin Học sinh trong Lớp
+-- DROP PROC GetStudentInClass;
+GO
+CREATE PROCEDURE GetStudentsInClass
+    @ClassID VARCHAR(10)
+AS
+BEGIN
+    SELECT HS.*
+    FROM HOCSINH HS
+    INNER JOIN BANGDIEM BD ON HS.UserID = BD.StudentID
+    WHERE BD.ClassID = @ClassID;
+END;
+
+-- 27. Xem Thông tin Giáo viên của Lớp
+-- DROP PROC GetTeacherOfClass;
+GO
+CREATE PROCEDURE GetTeacherOfClass
+    @ClassID VARCHAR(10)
+AS
+BEGIN
+    SELECT GV.*
+    FROM GIAOVIEN GV
+    INNER JOIN LOP L ON GV.UserID = L.AssignedTeacherID
+    WHERE L.ClassID = @ClassID;
+END;
+
+-- 28. Xem Điểm danh của Học sinh trong Lớp
+-- DROP PROC GetAttendanceInClass;
+GO
+CREATE PROCEDURE GetAttendanceInClass
+    @ClassID VARCHAR(10),
+    @StudentID VARCHAR(10)
+AS
+BEGIN
+    SELECT *
+    FROM BANDIEMDANH
+    WHERE ClassID = @ClassID AND StudentID = @StudentID;
+END;
+
+-- 29. Xem Điểm của Học sinh trong Lớp
+-- DROP PROC GetGradeInClass;
+GO
+CREATE PROCEDURE GetGradesInClass
+    @ClassID VARCHAR(10),
+    @StudentID VARCHAR(10)
+AS
+BEGIN
+    SELECT *
+    FROM BANGDIEM
+    WHERE ClassID = @ClassID AND StudentID = @StudentID;
+END;
+
+-- 30. Xem Thông tin Tài khoản của Người dùng
+-- DROP PROC GetAccountInfo
+GO
+CREATE PROCEDURE GetAccountInfo
+    @UserID VARCHAR(10)
+AS
+BEGIN
+    SELECT *
+    FROM TAIKHOAN
+    WHERE UserID = @UserID;
+END;
+
+-- 31. Thêm Phản hồi mới từ Học viên
+-- DROP PROC AddFeedback;
+GO
+CREATE PROCEDURE AddFeedback
+    @UserID VARCHAR(10),
+    @FeedbackID VARCHAR(10),
+    @DateOfFeedback DATE,
+    @Content VARCHAR(1000)
+AS
+BEGIN
+    INSERT INTO PHANHOI (UserID, FeedbackID, DateOfFeedback, Content, FeedbackState)
+    VALUES (@UserID, @FeedbackID, @DateOfFeedback, @Content, 'Đã nhận');
+END;
+
+-- 33. Xem Danh sách Phản hồi của Học viên
+-- DROP PROC GetTeacherFeedback;
+GO
+CREATE PROCEDURE GetFeedbackList
+    @UserID VARCHAR(10)
+AS
+BEGIN
+    SELECT *
+    FROM PHANHOI
+    WHERE UserID = @UserID;
+END;
+
+-- 34. Xem Danh sách Phản hồi chờ xử lý của Học viên
+-- DROP PROC GetPendingTeacherFeedback;
+GO
+CREATE PROCEDURE GetPendingFeedbacks
+    @UserID VARCHAR(10)
+AS
+BEGIN
+    SELECT *
+    FROM PHANHOI
+    WHERE UserID = @UserID AND FeedbackState = 'Đã nhận';
+END;
+
+-- 35. Xem danh sách tất cả phản hồi
+-- DROP PROC GetAllFeedbacks;
+GO
+CREATE PROCEDURE GetAllFeedbacks
+AS
+BEGIN
+    SELECT *
+    FROM PHANHOI;
+END;
+
+
+-- 37. Xem Danh sách Phản hồi đã xử lý bởi Sysadmin
+-- DROP PROC GetApprovedFeedbacks
+GO
+CREATE PROCEDURE GetApprovedFeedbacks
+AS
+BEGIN
+    SELECT *
+    FROM PHANHOI
+    WHERE FeedbackState = 'Đã xử lý';
+END;
+
+-- 39. Xem Phản hồi theo Ngày và Trạng thái cụ thể
+-- DROP PROC GetFeedbacksByDateAndStatus;
+GO
+CREATE PROCEDURE GetFeedbacksByDateAndStatus
+    @Date DATE,
+    @FeedbackState VARCHAR(10)
+AS
+BEGIN
+    SELECT *
+    FROM PHANHOI
+    WHERE DateOfFeedback = @Date AND FeedbackState = @FeedbackState;
+END;
+
+-- 40. Xử lý Phản hồi bởi Sysadmin
+-- DROP PROC ApproveFeedback;
+GO
+CREATE PROCEDURE ApproveFeedback
+    @UserID VARCHAR(10),
+    @FeedbackID VARCHAR(10)
+AS
+BEGIN
+    UPDATE PHANHOI
+    SET FeedbackState = 'Đã xử lý'
+    WHERE UserID = @UserID AND FeedbackID = @FeedbackID;
+END;
