@@ -1,0 +1,550 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package edutrack;
+
+import com.mysql.jdbc.RowData;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author Admins
+ */
+public class hocvien extends javax.swing.JFrame {
+
+    /**
+     * Creates new form hocvien
+     */
+    DefaultTableModel DefaultTable;
+    String user_id;
+    mysql connect = new mysql();
+    thong_tin_ca_nhan b;
+    public hocvien() {
+        initComponents();
+        tao_tkb();
+    }
+    public hocvien(String user_id_log) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        user_id = user_id_log;
+        update_table_monhoc();
+        tao_tkb();
+        tao_link();
+    }
+    private void tao_tkb()
+    {
+        DefaultTable = (DefaultTableModel) table_tkb.getModel();
+        String sql = "select lop.classname, thu, timestart, timeend from xeplop inner join lop on xeplop.classid = lop.classid"
+                + " inner join thoikhoabieu on thoikhoabieu.classid = xeplop.classid where xeplop.userid = ?";
+        try {
+            PreparedStatement pst = connect.conn.prepareStatement(sql);
+            pst.setString(1, user_id);
+            ResultSet rs = pst.executeQuery();
+            String row[] = new String[4];
+            while(rs.next())
+            {
+                row[0] = chuyen_doi(rs.getString("thu"));
+                row[1] = rs.getString("timestart");
+                row[2] = rs.getString("timeend");
+                row[3] = rs.getString("lop.classname");
+                DefaultTable.addRow(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,"Lỗi querry thời khóa biểu");
+        }
+        table_tkb.setModel(DefaultTable);
+    }
+    
+    private String chuyen_doi(String a)
+    {
+        int temp = Integer.parseInt(a);
+        switch (temp) {
+            case 2:
+                a = "Thứ hai";
+                break;
+            case 3:
+                a = "Thứ ba";
+                break;
+            case 4:
+                a = "Thứ tư";
+                break;
+            case 5:
+                a = "Thứ năm";
+                break;
+            case 6:
+                a = "Thứ sáu";
+                break;
+            case 7:
+                a = "Thứ bảy";
+                break;
+            default:
+                throw new AssertionError();
+        }
+        return a;
+    }
+    
+    private void tao_link()
+    {
+        DefaultTableModel tb = new DefaultTableModel();
+        String tieuDe[] = {"Link tải", "Lớp"};
+        tb.setColumnIdentifiers(tieuDe);
+        String sql = "SELECT Noidung, lop.classname FROM xeplop inner join lop on lop.classid = xeplop.ClassID inner join chitietlophoc " +
+                     "on lop.ClassID = chitietlophoc.id_lop_hoc inner join course on course.courseid = chitietlophoc.courseid" +
+                     " WHERE xeplop.UserID = ?";
+        try {
+            PreparedStatement pst = connect.conn.prepareStatement(sql);
+            pst.setString(1, user_id);
+            ResultSet rs = pst.executeQuery();
+            String row[] = new String[2];
+            while(rs.next())
+            {
+                row[0] = rs.getString(1);
+                row[1] = rs.getString(2);
+                tb.addRow(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,"Lỗi querry xem bài tập");
+        }
+        table_bt_gt.setModel(tb);
+    }
+    
+    private void update_table_monhoc()
+    {
+        DefaultTable = (DefaultTableModel) table_monhoc.getModel();
+        String sql = "SELECT ClassName FROM xeplop INNER JOIN LOP on lop.classid = xeplop.classid WHERE UserID = ?";
+        try {
+            com.mysql.jdbc.PreparedStatement pst = (com.mysql.jdbc.PreparedStatement) connect.conn.prepareStatement(sql);
+            pst.setString(1, user_id);
+            ResultSet rs = pst.executeQuery();
+            String row[] = new String[1];
+            while(rs.next())
+            {
+                row[0] = rs.getString(1);
+                DefaultTable.addRow(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,"Lỗi querry thời khóa biểu");
+        }
+        table_monhoc.setModel(DefaultTable);
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        dia_xemdiem = new javax.swing.JDialog();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tb_xemdiem = new javax.swing.JTable();
+        dia_xemdd = new javax.swing.JDialog();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tb_xemdd = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table_tkb = new javax.swing.JTable();
+        panel_phanhoi = new javax.swing.JPanel();
+        btnphanhoi = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtphanhoi = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        labeltkb = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        table_bt_gt = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        table_monhoc = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        btn_thong_tin_ca_nhan = new javax.swing.JButton();
+        btnXemdiem = new javax.swing.JButton();
+        btnXemdd = new javax.swing.JButton();
+        btndangxuat = new javax.swing.JButton();
+
+        dia_xemdiem.setTitle("Học viên"); // NOI18N
+        dia_xemdiem.setMinimumSize(new java.awt.Dimension(500, 300));
+
+        tb_xemdiem.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Lớp", "Giữa kì", "Cuối kì", "Nhận xét"
+            }
+        ));
+        jScrollPane5.setViewportView(tb_xemdiem);
+
+        javax.swing.GroupLayout dia_xemdiemLayout = new javax.swing.GroupLayout(dia_xemdiem.getContentPane());
+        dia_xemdiem.getContentPane().setLayout(dia_xemdiemLayout);
+        dia_xemdiemLayout.setHorizontalGroup(
+            dia_xemdiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+        );
+        dia_xemdiemLayout.setVerticalGroup(
+            dia_xemdiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+        );
+
+        dia_xemdd.setMinimumSize(new java.awt.Dimension(500, 300));
+
+        tb_xemdd.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Lớp", "Ngày", "Lí do"
+            }
+        ));
+        jScrollPane6.setViewportView(tb_xemdd);
+
+        javax.swing.GroupLayout dia_xemddLayout = new javax.swing.GroupLayout(dia_xemdd.getContentPane());
+        dia_xemdd.getContentPane().setLayout(dia_xemddLayout);
+        dia_xemddLayout.setHorizontalGroup(
+            dia_xemddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+        );
+        dia_xemddLayout.setVerticalGroup(
+            dia_xemddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("học viên");
+
+        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
+
+        table_tkb.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Thứ", "Bắt đầu", "Kết thúc", "Lớp"
+            }
+        ));
+        jScrollPane1.setViewportView(table_tkb);
+
+        panel_phanhoi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        panel_phanhoi.setPreferredSize(new java.awt.Dimension(360, 300));
+
+        btnphanhoi.setText("Gửi phản hồi");
+        btnphanhoi.setPreferredSize(new java.awt.Dimension(100, 23));
+        btnphanhoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnphanhoiActionPerformed(evt);
+            }
+        });
+
+        txtphanhoi.setColumns(20);
+        txtphanhoi.setRows(5);
+        jScrollPane2.setViewportView(txtphanhoi);
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("PHẢN HỒI");
+        jLabel1.setToolTipText("");
+        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel1.setFocusable(false);
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout panel_phanhoiLayout = new javax.swing.GroupLayout(panel_phanhoi);
+        panel_phanhoi.setLayout(panel_phanhoiLayout);
+        panel_phanhoiLayout.setHorizontalGroup(
+            panel_phanhoiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_phanhoiLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnphanhoi, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100))
+            .addComponent(jScrollPane2)
+            .addGroup(panel_phanhoiLayout.createSequentialGroup()
+                .addGap(94, 94, 94)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(96, Short.MAX_VALUE))
+        );
+        panel_phanhoiLayout.setVerticalGroup(
+            panel_phanhoiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_phanhoiLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnphanhoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
+        );
+
+        labeltkb.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        labeltkb.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labeltkb.setText("Thời khóa biểu");
+        labeltkb.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        table_bt_gt.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane3.setViewportView(table_bt_gt);
+
+        table_monhoc.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Các môn học đang đăng kí"
+            }
+        ));
+        jScrollPane4.setViewportView(table_monhoc);
+
+        jPanel1.setBackground(new java.awt.Color(102, 204, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        btn_thong_tin_ca_nhan.setText("Trang thông tin cá nhân");
+        btn_thong_tin_ca_nhan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_thong_tin_ca_nhanActionPerformed(evt);
+            }
+        });
+
+        btnXemdiem.setText("Xem điểm");
+        btnXemdiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXemdiemActionPerformed(evt);
+            }
+        });
+
+        btnXemdd.setText("Xem điểm danh");
+        btnXemdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXemddActionPerformed(evt);
+            }
+        });
+
+        btndangxuat.setText("Đăng xuất");
+        btndangxuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndangxuatActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(btn_thong_tin_ca_nhan)
+                .addGap(63, 63, 63)
+                .addComponent(btnXemdiem, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(btnXemdd, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54)
+                .addComponent(btndangxuat, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_thong_tin_ca_nhan, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnXemdiem, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnXemdd, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btndangxuat, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 824, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 824, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(panel_phanhoi, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(labeltkb)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
+                .addComponent(labeltkb)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panel_phanhoi, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(168, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btnphanhoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnphanhoiActionPerformed
+        String text = txtphanhoi.getText();
+        Date current_date = Date.valueOf(LocalDate.now());
+        String sql = "INSERT INTO phanhoi (`UserID`, `DateOfFeedback`, `Content`, `FeedbackState`) VALUES (?,?,?,?)";
+        try {
+            PreparedStatement pst = connect.conn.prepareStatement(sql);
+            pst.setString(1, user_id);
+            pst.setDate(2, current_date);
+            pst.setString(3, text);
+            pst.setString(4, "chưa xác nhận");
+            pst.executeUpdate();
+            txtphanhoi.setText("");
+            JOptionPane.showMessageDialog(this,"Gửi phản hồi thành công");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,"Lỗi querry");
+        }
+    }//GEN-LAST:event_btnphanhoiActionPerformed
+
+    private void btndangxuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndangxuatActionPerformed
+        dangnhap a = new dangnhap();
+        a.setVisible(true);
+        if(b != null)
+            b.dispose();
+        this.dispose();
+    }//GEN-LAST:event_btndangxuatActionPerformed
+
+    private void btn_thong_tin_ca_nhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_thong_tin_ca_nhanActionPerformed
+        b = new thong_tin_ca_nhan(user_id, "hocsinh");
+        b.setVisible(true);
+    }//GEN-LAST:event_btn_thong_tin_ca_nhanActionPerformed
+
+    private void btnXemdiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemdiemActionPerformed
+        DefaultTable = (DefaultTableModel) tb_xemdiem.getModel();
+        String sql = "SELECT ClassID, Midtern, Final, Comments FROM bangdiem WHERE StudentID = ?";
+        try {
+            PreparedStatement pst = connect.conn.prepareStatement(sql);
+            pst.setString(1, user_id);
+            ResultSet rs = pst.executeQuery();
+            String row[] = new String[4];
+            while(rs.next())
+            {
+                row[0] = rs.getString("classid");
+                row[1] = rs.getString("midtern");
+                row[2] = rs.getString("final");
+                row[3] = rs.getString("Comments");
+                DefaultTable.addRow(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,"Lỗi querry thời khóa biểu");
+        }
+        tb_xemdiem.setModel(DefaultTable);
+        dia_xemdiem.setLocationRelativeTo(null);
+        dia_xemdiem.setVisible(true);
+    }//GEN-LAST:event_btnXemdiemActionPerformed
+
+    private void btnXemddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemddActionPerformed
+        DefaultTable = (DefaultTableModel) tb_xemdd.getModel();
+        String sql = "SELECT ClassID, Ngay, LyDo FROM bangdiemdanh WHERE StudentID =?";
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+            PreparedStatement pst = connect.conn.prepareStatement(sql);
+            pst.setString(1, user_id);
+            ResultSet rs = pst.executeQuery();
+            String row[] = new String[3];
+            while(rs.next())
+            {
+                row[0] = rs.getString("classid");
+                row[1] = format.format(rs.getDate("Ngay"));
+                row[2] = rs.getString("LyDo");
+                DefaultTable.addRow(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,"Lỗi querry thời khóa biểu");
+        }
+        tb_xemdd.setModel(DefaultTable);
+        dia_xemdd.setLocationRelativeTo(null);
+        dia_xemdd.setVisible(true);
+    }//GEN-LAST:event_btnXemddActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(hocvien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(hocvien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(hocvien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(hocvien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new hocvien().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnXemdd;
+    private javax.swing.JButton btnXemdiem;
+    private javax.swing.JButton btn_thong_tin_ca_nhan;
+    private javax.swing.JButton btndangxuat;
+    private javax.swing.JButton btnphanhoi;
+    private javax.swing.JDialog dia_xemdd;
+    private javax.swing.JDialog dia_xemdiem;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JLabel labeltkb;
+    private javax.swing.JPanel panel_phanhoi;
+    private javax.swing.JTable table_bt_gt;
+    private javax.swing.JTable table_monhoc;
+    private javax.swing.JTable table_tkb;
+    private javax.swing.JTable tb_xemdd;
+    private javax.swing.JTable tb_xemdiem;
+    private javax.swing.JTextArea txtphanhoi;
+    // End of variables declaration//GEN-END:variables
+}
